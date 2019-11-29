@@ -1,6 +1,13 @@
 # Configuracion de PyModbusTCP
 Mas informacion Buscar https://pypi.org/project/pyModbusTCP/
 y descargar por medio de https://github.com/Elias-alarcon/PyModbusTCP/blob/master/pyModbusTCP-0.1.8.tar.gz
+esta configuracion fue realizada desde WINDOWS, para porder correrla en LINUX es necesario pequeños ajustes.
+
+# Configuracion Inicial del proyecto
+"from pyModbusTCP.client import ModbusClient" Importamos la libreria necesaria para la comunicación entre los dispositivos.
+para las comunicaciones de red es necesario import http.client  urllib import os,time,random
+Se agrega un progress bar para el momento de carga de documetos, solo tiene uso de timer para el envio de datos
+
 
 	#!/usr/bin/env python3.7
 	from pyModbusTCP.client import ModbusClient
@@ -11,6 +18,8 @@ y descargar por medio de https://github.com/Elias-alarcon/PyModbusTCP/blob/maste
 	from progress.bar import IncrementalBar   
 	c = ModbusClient(host='192.10.2.101', auto_open=True)
 	c.open()
+	
+# Direcciones para la obtener las lecturas, c.read_input_registers(4,1), donde el 4  muestra la direccion de lectura 40004 y 1 es el 		rango de lecturas 
 
 	def pres_torre ():
 		P_T = c.read_input_registers(4,1) #conversion de lista a enteros
