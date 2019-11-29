@@ -1,4 +1,6 @@
-# Configuracion de PyModbusTCP
+Configuracion de PyModbusTCP
+==============================
+
 Mas informacion Buscar https://pypi.org/project/pyModbusTCP/
 y descargar por medio de https://github.com/Elias-alarcon/PyModbusTCP/blob/master/pyModbusTCP-0.1.8.tar.gz
 esta configuracion fue realizada desde WINDOWS, para porder correrla en LINUX es necesario pequeños ajustes.
@@ -85,14 +87,15 @@ Se agrega un progress bar para el momento de carga de documetos, solo tiene uso 
 
 	def envio_nube(): #modulo de envio
 
-
+Prepearamos el  envio de información directamente a la API de Thingspeak, los campos de "Field" indican en los campos que se escribira los resultados obtenidos
+===
 		if c.is_open:
 				print("preparando envio de datos")
 				loading()
 				params = urllib.parse.urlencode({'field1': p_t,'field2':p_c,'field3': p_cp,
-												 'field4': t_c,'field5': t_t,'field6': str(z_a),
-												 'field7': str(x_a),'field8': str(t_m),
-												 'key':'23GN8QPWNXNTXWMV'})
+								'field4': t_c,'field5': t_t,'field6': str(z_a),
+								'field7': str(x_a),'field8': str(t_m),
+								'key':'APIKEY'})
 				headers = {"Content-typZZe": "application/x-www-form-urlencoded","Accept": "text/plain"}
 				conn = http.client.HTTPConnection("api.thingspeak.com:80")
 
@@ -110,7 +113,8 @@ Se agrega un progress bar para el momento de carga de documetos, solo tiene uso 
 
 				print('Envio de datos exitoso')
 				sleep(3)
-
+Despliega las Lecturas obtenidas en las lineas de programa anteriores
+====
 	def lecturas_horus():
 
 		print(' ___ LECTURA ___ ' + str(datetime.now()))
@@ -136,3 +140,101 @@ Se agrega un progress bar para el momento de carga de documetos, solo tiene uso 
 
 			print('Sin envio de datos a la nube')
 			sleep(3)
+Este es el otro programa donde se despliga las funciones mediante llamadas del programa escrito en la parte de arriba, como antes mensione este es un Programa diferente al de aqui arriba 
+====
+Importamos las siguientes librerias incluyendo el archivo anterior 
+====
+
+	from pb2_functions import *
+	from time import sleep
+	from datetime import datetime
+	import os,time,random
+Cargamos las lecturas que realizaremos conforme las horas en las que deseamos tener la lecturas, este caso las separe por turnos 
+=====
+	while True:
+	    dto=datetime.today()
+	    ta=datetime.strftime(dto,'%H:%M')
+	    #Primero 
+	    tp11=str('07:00')
+	    tp12=str('08:00')
+	    tp13=str('09:00')
+	    tp14=str('10:00')
+	    tp15=str('11:00')
+	    tp16=str('12:00')
+	    tp17=str('13:00')
+	    tp18=str('14:00')
+	    #segundo
+	    tp21=str('15:00')
+	    tp22=str('16:00')
+	    tp23=str('17:00')
+	    tp24=str('18:00')
+	    tp25=str('19:00')
+	    tp26=str('20:00')
+	    tp27=str('21:00')
+	    tp28=str('22:00')
+	    #tercero
+	    tp31=str('23:00')
+	    tp32=str('00:00')
+	    tp33=str('01:00')
+	    tp34=str('02:00')
+	    tp35=str('03:00')
+	    tp36=str('04:00')
+	    tp37=str('05:00')
+	    tp38=str('06:00')
+
+	    lecturas_horus()
+	    
+Cuando se cumpla algunas de las siguientes condiciones se enviaran los datos en la conexion realizada con el API de Thingspeak
+====
+	    if (ta==tp11)or(ta==tp12):
+	       envio_nube()
+	       print('Primer Turno')
+	       sleep(3)
+	    if (ta==tp13)or(ta==tp14):
+		envio_nube()
+		print('Primer Turno')
+		sleep(3)
+	    if (ta==tp15)or(ta==tp16):
+		envio_nube()
+		print('Primer Turno')
+		sleep(3)
+	    if (ta==tp17)or(ta==tp18):
+		envio_nube()
+		print('Primer Turno')
+		sleep(3)
+	    if(ta==tp21)or(ta==tp22):
+	       envio_nube()
+	       print('Segundo Turno')
+	       sleep(3)
+	    if (ta==tp23)or(ta==tp24):
+		envio_nube()
+		print('Segundo Turno')
+		sleep(3)
+	    if (ta==tp25)or(ta==tp26):
+		envio_nube()
+		print('Segundo Turno')
+		sleep(3)
+	    if (ta==tp27)or(ta==tp28):
+		envio_nube()
+		print('Segundo Turno')
+		sleep(3)
+	    if (ta==tp31)or(ta==tp32):
+	       envio_nube()
+	       print('Tercer Turno')
+	       sleep(3)
+	    if (ta==tp33)or(ta==tp34):
+		envio_nube()
+		print('Tercer Turno')
+	    if (ta==tp35)or(ta==tp36):
+		envio_nube()
+		print('Tercer Turno')
+		sleep(3)
+	    if (ta==tp37)or(ta==tp38):
+		envio_nube()
+		print('Tercer Turno')
+		sleep(3)
+	    sleep(3)
+	    os.system('cls') #en raspberri se usa comando 'clear'
+
+Cualquier comentario que me ayude a mejorar mi proyecto es bien recibido, saludos. EA OUT
+====
